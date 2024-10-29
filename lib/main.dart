@@ -16,7 +16,7 @@ class _MainAppState extends State<MainApp> {
   TextEditingController judulCtrl = TextEditingController();
   TextEditingController isiCtrl = TextEditingController();
 
-  get listCatatan => ;
+  List<Map<String, String>> listCatatan = [];
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +58,11 @@ class _MainAppState extends State<MainApp> {
                         child: Text("Clear")),
                     ElevatedButton(
                         onPressed: () {
-                          listCatatan.add({
-                            "judul": judulCtrl.text,
-                            "isi": isiCtrl.text,
+                          setState(() {
+                            listCatatan.add({
+                              "judul": judulCtrl.text,
+                              "isi": isiCtrl.text,
+                            });
                           });
                         },
                         child: Text("Submit")),
@@ -73,10 +75,13 @@ class _MainAppState extends State<MainApp> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        print(listCatatan[index].judul);
-                        print(listCatatan[index].isi);
-                        print(listCatatan[index].tglInput);
+                        print(listCatatan[index]["judul"]);
+                        print(listCatatan[index]["isi"]);
                       },
+                      child: ListTile(
+                        title: Text(listCatatan[index]["judul"] ?? ""),
+                        subtitle: Text(listCatatan[index]["isi"] ?? ""),
+                      ),
                     );
                   },
                 ))
