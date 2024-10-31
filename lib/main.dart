@@ -16,7 +16,8 @@ class _MainAppState extends State<MainApp> {
   TextEditingController judulCtrl = TextEditingController();
   TextEditingController isiCtrl = TextEditingController();
 
-  List<Map<String, String>> listCatatan = [];
+  List<Catatan> get listCatatan => _listCatatan;
+  final List<Catatan> _listCatatan = [];
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +60,10 @@ class _MainAppState extends State<MainApp> {
                     ElevatedButton(
                         onPressed: () {
                           setState(() {
-                            listCatatan.add({
-                              "judul": judulCtrl.text,
-                              "isi": isiCtrl.text,
-                            });
+                            listCatatan.add(Catatan(
+                              judul: judulCtrl.text,
+                              isi: isiCtrl.text,
+                            ));
                           });
                         },
                         child: Text("Submit")),
@@ -75,12 +76,16 @@ class _MainAppState extends State<MainApp> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        print(listCatatan[index]["judul"]);
-                        print(listCatatan[index]["isi"]);
+                        print(listCatatan[index].judul);
+                        print(listCatatan[index].isi);
+                        print(listCatatan[index].tanggal);
                       },
-                      child: ListTile(
-                        title: Text(listCatatan[index]["judul"] ?? ""),
-                        subtitle: Text(listCatatan[index]["isi"] ?? ""),
+                      child: Card(
+                        child: ListTile(
+                          leading: Icon(Icons.note_add_rounded),
+                          title: Text(listCatatan[index].judul),
+                          subtitle: Text(listCatatan[index].isi),
+                        ),
                       ),
                     );
                   },
